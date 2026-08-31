@@ -1,14 +1,17 @@
 "use client";
 
+import { formatThaiDate } from "@/lib/thaiDate";
+
 // ฟอร์มแก้ไขแผนการสอนแบบมีโครงสร้าง — แก้ทุกช่องได้ก่อนบันทึก/ดาวน์โหลด
 
 function Label({ children }) {
   return <label className="block text-sm font-medium text-slate-700 mb-1">{children}</label>;
 }
 
-function Input({ value, onChange, placeholder }) {
+function Input({ value, onChange, placeholder, type = "text" }) {
   return (
     <input
+      type={type}
       value={value || ""}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
@@ -95,6 +98,8 @@ export default function PlanEditor({ plan, onChange }) {
           <div><Label>เวลา</Label><Input value={p.timeText} onChange={(v) => set("timeText", v)} /></div>
           <div><Label>โรงเรียน</Label><Input value={p.school} onChange={(v) => set("school", v)} /></div>
           <div><Label>ผู้สอน</Label><Input value={p.teacher} onChange={(v) => set("teacher", v)} /></div>
+          <div><Label>ผู้อำนวยการโรงเรียน</Label><Input value={p.director} onChange={(v) => set("director", v)} /></div>
+          <div><Label>วันที่สอน</Label><Input type="date" value={p.teachingDate} onChange={(v) => set("teachingDate", v)} /><p className="text-xs text-slate-500 mt-1">{formatThaiDate(p.teachingDate)}</p></div>
           <div><Label>กลุ่มสาระการเรียนรู้</Label><Input value={p.subject} onChange={(v) => set("subject", v)} /></div>
           <div><Label>ระดับชั้น</Label><Input value={p.grade} onChange={(v) => set("grade", v)} /></div>
           <div><Label>หน่วยการเรียนรู้</Label><Input value={p.unit} onChange={(v) => set("unit", v)} /></div>
