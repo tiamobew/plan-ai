@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AppHeader from "@/components/AppHeader";
 import PlanEditor from "@/components/PlanEditor";
 import PlanDocument from "@/components/PlanDocument";
+import ProfilePresetPicker from "@/components/ProfilePresetPicker";
 import { downloadWord } from "@/lib/exportDoc";
 import { formatThaiDate } from "@/lib/thaiDate";
 
@@ -42,59 +43,11 @@ export default function CreatePage() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [profileLoading, setProfileLoading] = useState(true);
-  const [profileSaving, setProfileSaving] = useState(false);
-  const [profileMessage, setProfileMessage] = useState("");
   const [tab, setTab] = useState("edit");
 
   const setF = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const input =
     "w-full rounded-lg border border-slate-200 px-3 py-2 text-[15px] focus:border-brand-500 focus:ring-2 focus:ring-brand-100 outline-none";
-
-  useEffect(() => {
-    let cancelled = false;
-    async function loadProfile() {
-      try {
-        const res = await fetch("/api/profile");
-        const data = await res.json();
-        if (!cancelled && res.ok && data.profile) {
-          setForm((current) => ({ ...current, ...data.profile }));
-        }
-      } catch {
-        // ใช้ฟอร์มว่างได้ตามปกติหากยังไม่มีโปรไฟล์
-      } finally {
-        if (!cancelled) setProfileLoading(false);
-      }
-    }
-    loadProfile();
-    return () => { cancelled = true; };
-  }, []);
-
-  async function saveProfile() {
-    setProfileSaving(true);
-    setProfileMessage("");
-    try {
-      const res = await fetch("/api/profile", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          profile: {
-            teacher: form.teacher,
-            subject: form.subject,
-            director: form.director,
-            school: form.school,
-            grade: form.grade,
-          },
-        }),
-      });
-      const data = await res.json();
-      setProfileMessage(res.ok ? "บันทึกข้อมูลพื้นฐานแล้ว" : data.error || "บันทึกข้อมูลพื้นฐานไม่สำเร็จ");
-    } catch {
-      setProfileMessage("เชื่อมต่อเพื่อบันทึกข้อมูลพื้นฐานไม่สำเร็จ");
-    } finally {
-      setProfileSaving(false);
-    }
-  }
 
   async function generate(e) {
     e?.preventDefault();
@@ -160,16 +113,10 @@ export default function CreatePage() {
             </p>
 
             <form onSubmit={generate} className="mt-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
-              <div className="rounded-xl border border-brand-100 bg-brand-50 p-4 flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p className="font-semibold text-slate-800">ข้อมูลพื้นฐานสำหรับใช้ซ้ำ</p>
-                  <p className="text-sm text-slate-600">{profileLoading ? "กำลังดึงข้อมูล..." : "แก้ไขแล้วกดบันทึก ระบบจะเติมให้แผนใหม่อัตโนมัติ"}</p>
-                  {profileMessage && <p className="text-sm text-brand-700 mt-1">{profileMessage}</p>}
-                </div>
-                <button type="button" onClick={saveProfile} disabled={profileSaving || profileLoading} className="rounded-lg bg-white border border-brand-200 px-4 py-2 text-sm font-semibold text-brand-700 hover:bg-brand-100 disabled:opacity-50">
-                  {profileSaving ? "กำลังบันทึก..." : "💾 บันทึกข้อมูลพื้นฐาน"}
-                </button>
-              </div>
+              <ProfilePresetPicker
+                value={form}
+                onApply={(profile) => setForm((current) => ({ ...current, ...profile }))}
+              />
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="กลุ่มสาระการเรียนรู้" required>
