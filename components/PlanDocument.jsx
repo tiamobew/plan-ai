@@ -153,24 +153,26 @@ export default function PlanDocument({ plan }) {
 
   return (
     <article className="doc-sheet formal-doc mx-auto max-w-[820px] rounded-2xl shadow-soft p-6 md:p-10">
-      <header className="doc-header">
+      <header className="doc-plan-header">
         <img className="doc-seal" src="/image1.png" alt="ตราโรงเรียนวัดทุ่งจาน" />
-        <div className="doc-header-copy">
+        <div className="doc-plan-header-copy">
           <h1>แผนการจัดการเรียนรู้ที่ {p.planNumber || "1"}</h1>
           <p>โรงเรียน{p.school || "วัดทุ่งจาน"}</p>
         </div>
       </header>
-      <div className="doc-header-rule" />
 
-      <div className="doc-meta">
-        <MetaItem label="หน่วยการเรียนรู้">{p.unit}</MetaItem>
-        <MetaItem label="เรื่อง">{p.topic}</MetaItem>
-        <MetaItem label="กลุ่มสาระการเรียนรู้">{p.subject}</MetaItem>
-        <MetaItem label="ชั้น">{p.grade}</MetaItem>
-        <MetaItem label="เวลา">{p.timeText}</MetaItem>
-        <MetaItem label="ผู้สอน">{p.teacher}</MetaItem>
-        <MetaItem label="วันที่สอน">{formatThaiDate(p.teachingDate)}</MetaItem>
-        <MetaItem label="ผู้อำนวยการโรงเรียน">{p.director}</MetaItem>
+      <div className="doc-plan-meta">
+        <div className="doc-plan-meta-column">
+          <MetaItem label="หน่วยการเรียนรู้">{p.unit}</MetaItem>
+          <MetaItem label="กลุ่มสาระการเรียนรู้">{p.subject}</MetaItem>
+          <MetaItem label="เวลา">{p.timeText}</MetaItem>
+          <MetaItem label="วันที่สอน">{formatThaiDate(p.teachingDate)}</MetaItem>
+        </div>
+        <div className="doc-plan-meta-column">
+          <MetaItem label="เรื่อง">{p.topic}</MetaItem>
+          <MetaItem label="ชั้น">{p.grade}</MetaItem>
+          <MetaItem label="ผู้สอน">{p.teacher}</MetaItem>
+        </div>
       </div>
 
       <Section no="1" title="มาตรฐานการเรียนรู้ / ตัวชี้วัด">
