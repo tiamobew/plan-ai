@@ -80,6 +80,43 @@ body {
 .doc-signatures p { margin: 1px 0; }
 
 
+.doc-worksheet-page,
+.doc-worksheet-page * {
+  font-family: "TH SarabunPSK", "TH Sarabun New", "Sarabun", sans-serif;
+  font-size: 16pt;
+}
+
+.doc-worksheet-title {
+  margin: 0 0 12px;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.doc-worksheet-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid #555;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.doc-worksheet-list {
+  margin: 8px 0 0 28px;
+  padding: 0;
+}
+
+.doc-worksheet-list > li {
+  margin: 0 0 12px;
+  padding-left: 4px;
+  break-inside: avoid;
+}
+
+.doc-worksheet-list p { margin: 2px 0; }
+.doc-answer-lines span { display: block; line-height: 1.35; }
+.doc-worksheet-answers > li { margin-bottom: 10px; }
+
 .doc-page-break {
   margin-top: 52px;
   padding-top: 30px;
@@ -142,6 +179,7 @@ body {
   .doc-header-copy p, .doc-section-title { font-size: 18px; }
   .doc-meta, .doc-post-meta { grid-template-columns: 1fr; gap: 2px; }
   .doc-post-meta-wide { grid-column: auto; }
+  .doc-worksheet-meta { flex-direction: column; gap: 2px; }
   .doc-signatures { grid-template-columns: 1fr; gap: 24px; }
 }
 
