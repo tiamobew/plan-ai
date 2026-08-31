@@ -61,3 +61,39 @@ create table if not exists public.school_profile (
 alter table public.school_profile enable row level security;
 revoke all on table public.school_profile from anon, authenticated;
 grant select, insert, update on table public.school_profile to service_role;
+
+-- ชุดข้อมูลพื้นฐานหลายรายการสำหรับเลือกใช้ในหน้าสร้างแผน
+create table if not exists public.school_profiles (
+  id          uuid primary key default gen_random_uuid(),
+  name        text not null,
+  teacher     text not null default '',
+  subject     text not null default '',
+  director    text not null default '',
+  school      text not null default '',
+  grade       text not null default '',
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+
+create or replace function public.set_school_profiles_updated_at()
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
+begin
+  new.updated_at = pg_catalog.now();
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_school_profiles_updated on public.school_profiles;
+create trigger trg_school_profiles_updated
+  before update on public.school_profiles
+  for each row execute function public.set_school_profiles_updated_at();
+
+alter table public.school_profiles enable row level security;
+revoke all on table public.school_profiles from public, anon, authenticated;
+grant select, insert, update, delete on table public.school_profiles to service_role;
+
+create index if not exists idx_school_profiles_updated_at
+  on public.school_profiles (updated_at desc);
