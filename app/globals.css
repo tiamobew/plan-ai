@@ -86,31 +86,52 @@ body {
   border-top: 2px dashed #cbd5e1;
 }
 
+.doc-post-page {
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.doc-post-page .doc-header {
+  min-height: 70px;
+}
+
+.doc-post-page .doc-seal {
+  width: 62px;
+  height: 62px;
+}
+
+.doc-post-page .doc-header-copy h1 { font-size: 23px; }
+.doc-post-page .doc-header-copy p { font-size: 18px; }
+
 .doc-post-meta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3px 26px;
+  gap: 2px 24px;
   border: 1px solid #555;
-  padding: 9px 12px;
-  margin-bottom: 16px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
 }
 
 .doc-post-meta-wide { grid-column: 1 / -1; }
 
-.doc-post-block { margin-top: 15px; }
+.doc-post-block { margin-top: 8px; }
 .doc-post-block h2 {
-  margin: 0 0 5px;
+  margin: 0 0 2px;
   border-left: 5px solid #176b5a;
   background: #e8f0ec;
-  padding: 4px 10px 3px;
-  font-size: 20px;
-  line-height: 1.35;
+  padding: 2px 8px;
+  font-size: 18px;
+  line-height: 1.25;
   font-weight: 700;
   break-after: avoid;
 }
 .doc-post-block p {
-  margin: 4px 12px;
+  margin: 2px 9px;
   text-align: justify;
+}
+
+.doc-post-page .doc-signatures {
+  margin-top: 18px;
 }
 
 @media (max-width: 640px) {
@@ -142,5 +163,18 @@ body {
   .doc-section { margin-top: 12pt; }
   .doc-section-title, .doc-post-block h2, .doc-table thead, .doc-signatures { break-inside: avoid; }
   .doc-page-break { page-break-before: always; break-before: page; margin-top: 0; padding-top: 0; border-top: 0; }
+  .doc-post-page {
+    font-size: 14pt;
+    line-height: 1.22;
+  }
+  .doc-post-page .doc-header { min-height: 58pt; }
+  .doc-post-page .doc-seal { width: 48pt; height: 48pt; }
+  .doc-post-page .doc-header-copy h1 { font-size: 18pt; }
+  .doc-post-page .doc-header-copy p { font-size: 15pt; }
+  .doc-post-page .doc-post-meta { padding: 3pt 6pt; margin-bottom: 4pt; }
+  .doc-post-page .doc-post-block { margin-top: 4pt; }
+  .doc-post-page .doc-post-block h2 { padding: 1.5pt 5pt; margin-bottom: 1pt; font-size: 15pt; }
+  .doc-post-page .doc-post-block p { margin: 1pt 5pt; }
+  .doc-post-page .doc-signatures { margin-top: 10pt; }
   @page { size: A4; margin: 18mm 16mm; }
 }
