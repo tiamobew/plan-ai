@@ -82,6 +82,7 @@ export default function PlanEditor({ plan, onChange }) {
   const comps = p.competencies || [];
   const acts = p.activities || [];
   const evals = p.evaluation || [];
+  const worksheetQuestions = p.worksheet?.questions || [];
 
   const setComp = (i, k, v) =>
     set("competencies", comps.map((c, idx) => (idx === i ? { ...c, [k]: v } : c)));
@@ -89,6 +90,12 @@ export default function PlanEditor({ plan, onChange }) {
     set("activities", acts.map((a, idx) => (idx === i ? { ...a, [k]: v } : a)));
   const setEval = (i, k, v) =>
     set("evaluation", evals.map((e, idx) => (idx === i ? { ...e, [k]: v } : e)));
+  const setWorksheetQuestion = (i, k, v) =>
+    setNested("worksheet", "questions", worksheetQuestions.map((q, idx) => (idx === i ? { ...q, [k]: v } : q)));
+  const addWorksheetQuestion = () =>
+    setNested("worksheet", "questions", [...worksheetQuestions, { question: "", answer: "" }]);
+  const deleteWorksheetQuestion = (i) =>
+    setNested("worksheet", "questions", worksheetQuestions.filter((_, idx) => idx !== i));
 
   return (
     <div className="space-y-4">
@@ -190,6 +197,25 @@ export default function PlanEditor({ plan, onChange }) {
           </div>
         ))}
         <button type="button" onClick={() => set("evaluation", [...evals, { aspect: "", method: "", tool: "", criteria: "" }])} className="text-sm text-brand-600 font-medium">+ เพิ่มรายการประเมิน</button>
+      </Card>
+
+      <Card title="แบบฝึกหัดพร้อมเฉลย (TH SarabunPSK 16 pt)">
+        <p className="text-sm text-slate-500">
+          ระบบสร้างให้อย่างน้อย 1 ใบ สามารถแก้ไข เพิ่ม หรือลบคำถามและเฉลยได้ก่อนดาวน์โหลด Word
+        </p>
+        <div><Label>ชื่อแบบฝึกหัด</Label><Input value={p.worksheet?.title} onChange={(v) => setNested("worksheet", "title", v)} placeholder={`แบบฝึกหัด เรื่อง ${p.topic || ""}`} /></div>
+        <div><Label>คำชี้แจง</Label><Area rows={2} value={p.worksheet?.instructions} onChange={(v) => setNested("worksheet", "instructions", v)} placeholder="ให้นักเรียนตอบคำถามต่อไปนี้" /></div>
+        {worksheetQuestions.map((item, i) => (
+          <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-3 space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-slate-500">ข้อที่ {i + 1}</span>
+              <button type="button" onClick={() => deleteWorksheetQuestion(i)} className="px-2 rounded text-red-500 hover:bg-red-100">✕ ลบ</button>
+            </div>
+            <Area rows={2} value={item.question} onChange={(v) => setWorksheetQuestion(i, "question", v)} placeholder="คำถามหรือโจทย์" />
+            <Area rows={2} value={item.answer} onChange={(v) => setWorksheetQuestion(i, "answer", v)} placeholder="เฉลยและวิธีคิด" />
+          </div>
+        ))}
+        <button type="button" onClick={addWorksheetQuestion} className="text-sm text-brand-600 font-medium">+ เพิ่มคำถามและเฉลย</button>
       </Card>
 
       <Card title="11. บันทึกหลังการสอน (หน้าใหม่ในไฟล์ Word)">
