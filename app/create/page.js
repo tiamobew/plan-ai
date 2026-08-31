@@ -23,6 +23,7 @@ const EMPTY_FORM = {
   teachingModel: "",
   standard: "",
   notes: "",
+  postTeachingNotes: "",
 };
 
 function Field({ label, children, required }) {
@@ -158,6 +159,11 @@ export default function CreatePage() {
 
               <Field label="ความต้องการเพิ่มเติม / บริบทห้องเรียน">
                 <textarea className={input} rows={3} value={form.notes} onChange={(e) => setF("notes", e.target.value)} placeholder="เช่น เน้น Active Learning, นักเรียน 25 คน, ใช้บาร์โมเดล, สอดแทรกทักษะการทำงานเป็นทีม ฯลฯ" />
+              </Field>
+
+              <Field label="ข้อมูลสำหรับ AI ช่วยเขียนบันทึกหลังการสอน (ถ้ามี)">
+                <textarea className={input} rows={3} value={form.postTeachingNotes} onChange={(e) => setF("postTeachingNotes", e.target.value)} placeholder="เช่น นักเรียนส่วนใหญ่ทำแบบฝึกหัดได้ มีบางคนสับสนขั้นตอนการคำนวณ ควรทบทวนด้วยสื่อรูปธรรม — เว้นว่างได้และแก้ไขภายหลัง" />
+                <p className="text-xs text-slate-500 mt-1">AI จะใช้ข้อมูลนี้ร่างผล K/P/A ปัญหา แนวทางแก้ไข และผลสำเร็จ โดยไม่แต่งตัวเลขที่ไม่ได้ระบุ</p>
               </Field>
 
               {error && <div className="rounded-lg bg-red-50 text-red-600 text-sm px-4 py-3">{error}</div>}
