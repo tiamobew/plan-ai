@@ -191,6 +191,18 @@ export default function PlanEditor({ plan, onChange }) {
         ))}
         <button type="button" onClick={() => set("evaluation", [...evals, { aspect: "", method: "", tool: "", criteria: "" }])} className="text-sm text-brand-600 font-medium">+ เพิ่มรายการประเมิน</button>
       </Card>
+
+      <Card title="11. บันทึกหลังการสอน (หน้าใหม่ในไฟล์ Word)">
+        <p className="text-sm text-slate-500">
+          หากเว้นช่อง K/P/A ระบบจะดึงจุดประสงค์จากแผนมาใช้ให้อัตโนมัติ
+        </p>
+        <div><Label>ผลด้านความรู้ (K)</Label><Area rows={3} value={p.postTeaching?.knowledge} onChange={(v) => setNested("postTeaching", "knowledge", v)} placeholder="เว้นว่างเพื่อใช้จุดประสงค์ด้านความรู้จากแผน" /></div>
+        <div><Label>ผลด้านทักษะ/กระบวนการ (P)</Label><Area rows={3} value={p.postTeaching?.process} onChange={(v) => setNested("postTeaching", "process", v)} placeholder="เว้นว่างเพื่อใช้จุดประสงค์ด้านทักษะจากแผน" /></div>
+        <div><Label>ผลด้านเจตคติ (A)</Label><Area rows={3} value={p.postTeaching?.attitude} onChange={(v) => setNested("postTeaching", "attitude", v)} placeholder="เว้นว่างเพื่อใช้จุดประสงค์ด้านเจตคติจากแผน" /></div>
+        <div><Label>ปัญหาและอุปสรรค</Label><Area rows={3} value={p.postTeaching?.problems} onChange={(v) => setNested("postTeaching", "problems", v)} placeholder="บันทึกหลังสอน หรือเว้นว่างไว้เขียนภายหลัง" /></div>
+        <div><Label>แนวทางแก้ไขและพัฒนา</Label><Area rows={3} value={p.postTeaching?.solutions} onChange={(v) => setNested("postTeaching", "solutions", v)} placeholder="แนวทางช่วยเหลือนักเรียนและปรับกิจกรรม" /></div>
+        <div><Label>ผลสำเร็จของการจัดการเรียนรู้</Label><Area rows={3} value={p.postTeaching?.success} onChange={(v) => setNested("postTeaching", "success", v)} placeholder="เว้นว่างเพื่อให้ระบบสรุปจากเรื่องและจุดประสงค์ของแผน" /></div>
+      </Card>
     </div>
   );
 }
