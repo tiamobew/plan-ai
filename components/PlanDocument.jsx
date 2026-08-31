@@ -34,6 +34,59 @@ function resultFromPlan(customValue, objective) {
   return source.startsWith("นักเรียน") ? source : `นักเรียนสามารถ${source}`;
 }
 
+function worksheetQuestions(plan) {
+  const items = (plan?.worksheet?.questions || []).filter((item) => String(item?.question || "").trim());
+  if (items.length) return items;
+  const situation = plan?.problemSituation || {};
+  return [{
+    question: situation.problem || `อธิบายความรู้หรือวิธีคิดจากเรื่อง ${plan?.topic || "ที่เรียน"}`,
+    answer: situation.answer || "พิจารณาจากคำตอบและวิธีคิดของนักเรียน",
+  }];
+}
+
+function WorksheetPages({ plan }) {
+  const p = plan || {};
+  const worksheet = p.worksheet || {};
+  const questions = worksheetQuestions(p);
+
+  return (
+    <>
+      <section className="doc-worksheet-page doc-page-break">
+        <h1 className="doc-worksheet-title">{worksheet.title || `แบบฝึกหัด เรื่อง ${p.topic || "-"}`}</h1>
+        <div className="doc-worksheet-meta">
+          <span>ชื่อ-สกุล .......................................................................</span>
+          <span>ชั้น {p.grade || "..............."} เลขที่ ...............</span>
+        </div>
+        <p><strong>คำชี้แจง:</strong> {worksheet.instructions || "ให้นักเรียนตอบคำถามต่อไปนี้ พร้อมแสดงวิธีคิด"}</p>
+        <ol className="doc-worksheet-list">
+          {questions.map((item, index) => (
+            <li key={index}>
+              <p>{item.question}</p>
+              <div className="doc-answer-lines">
+                <span>................................................................................................................................................</span>
+                <span>................................................................................................................................................</span>
+                <span>................................................................................................................................................</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="doc-worksheet-page doc-page-break">
+        <h1 className="doc-worksheet-title">เฉลย — {worksheet.title || `แบบฝึกหัด เรื่อง ${p.topic || "-"}`}</h1>
+        <ol className="doc-worksheet-list doc-worksheet-answers">
+          {questions.map((item, index) => (
+            <li key={index}>
+              <p><strong>โจทย์:</strong> {item.question}</p>
+              <p><strong>เฉลย:</strong> {item.answer || "พิจารณาจากคำตอบและวิธีคิดของนักเรียน"}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </>
+  );
+}
+
 function PostTeachingPage({ plan, objectives }) {
   const p = plan || {};
   const record = p.postTeaching || {};
@@ -191,6 +244,7 @@ export default function PlanDocument({ plan }) {
         </div>
       </Section>
 
+      <WorksheetPages plan={p} />
       <PostTeachingPage plan={p} objectives={objectives} />
     </article>
   );
