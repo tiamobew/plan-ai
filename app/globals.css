@@ -79,13 +79,48 @@ body {
 .doc-signatures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px; margin-top: 34px; text-align: center; }
 .doc-signatures p { margin: 1px 0; }
 
+
+.doc-page-break {
+  margin-top: 52px;
+  padding-top: 30px;
+  border-top: 2px dashed #cbd5e1;
+}
+
+.doc-post-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px 26px;
+  border: 1px solid #555;
+  padding: 9px 12px;
+  margin-bottom: 16px;
+}
+
+.doc-post-meta-wide { grid-column: 1 / -1; }
+
+.doc-post-block { margin-top: 15px; }
+.doc-post-block h2 {
+  margin: 0 0 5px;
+  border-left: 5px solid #176b5a;
+  background: #e8f0ec;
+  padding: 4px 10px 3px;
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 700;
+  break-after: avoid;
+}
+.doc-post-block p {
+  margin: 4px 12px;
+  text-align: justify;
+}
+
 @media (max-width: 640px) {
   .doc-sheet { font-size: 16px; }
   .doc-header { grid-template-columns: 62px 1fr 20px; }
   .doc-seal { width: 58px; height: 58px; }
   .doc-header-copy h1 { font-size: 21px; }
   .doc-header-copy p, .doc-section-title { font-size: 18px; }
-  .doc-meta { grid-template-columns: 1fr; gap: 2px; }
+  .doc-meta, .doc-post-meta { grid-template-columns: 1fr; gap: 2px; }
+  .doc-post-meta-wide { grid-column: auto; }
   .doc-signatures { grid-template-columns: 1fr; gap: 24px; }
 }
 
@@ -105,6 +140,7 @@ body {
   .doc-header-copy p, .doc-section-title { font-size: 17pt; }
   .doc-table { font-size: 14pt; }
   .doc-section { margin-top: 12pt; }
-  .doc-section-title, .doc-table thead, .doc-signatures { break-inside: avoid; }
+  .doc-section-title, .doc-post-block h2, .doc-table thead, .doc-signatures { break-inside: avoid; }
+  .doc-page-break { page-break-before: always; break-before: page; margin-top: 0; padding-top: 0; border-top: 0; }
   @page { size: A4; margin: 18mm 16mm; }
 }
