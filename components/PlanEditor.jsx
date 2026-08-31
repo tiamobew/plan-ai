@@ -220,7 +220,7 @@ export default function PlanEditor({ plan, onChange }) {
 
       <Card title="11. บันทึกหลังการสอน (หน้าใหม่ในไฟล์ Word)">
         <p className="text-sm text-slate-500">
-          หากเว้นช่อง K/P/A ระบบจะดึงจุดประสงค์จากแผนมาใช้ให้อัตโนมัติ
+          AI จะช่วยร่างบันทึก K/P/A ปัญหา แนวทางแก้ไข และผลสำเร็จจากข้อมูลที่ระบุตอนสร้างแผน ทุกช่องสามารถแก้ไขให้ตรงกับผลการสอนจริงได้
         </p>
         <div><Label>ผลด้านความรู้ (K)</Label><Area rows={3} value={p.postTeaching?.knowledge} onChange={(v) => setNested("postTeaching", "knowledge", v)} placeholder="เว้นว่างเพื่อใช้จุดประสงค์ด้านความรู้จากแผน" /></div>
         <div><Label>ผลด้านทักษะ/กระบวนการ (P)</Label><Area rows={3} value={p.postTeaching?.process} onChange={(v) => setNested("postTeaching", "process", v)} placeholder="เว้นว่างเพื่อใช้จุดประสงค์ด้านทักษะจากแผน" /></div>
