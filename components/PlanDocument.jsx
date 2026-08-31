@@ -26,6 +26,74 @@ function MetaItem({ label, children }) {
   return <div className="doc-meta-item"><strong>{label}</strong> {children || "-"}</div>;
 }
 
+function resultFromPlan(customValue, objective) {
+  const custom = String(customValue || "").trim();
+  if (custom) return custom;
+  const source = String(objective || "").trim();
+  if (!source) return "........................................................................................................................";
+  return source.startsWith("นักเรียน") ? source : `นักเรียนสามารถ${source}`;
+}
+
+function PostTeachingPage({ plan, objectives }) {
+  const p = plan || {};
+  const record = p.postTeaching || {};
+
+  return (
+    <section className="doc-post-page doc-page-break">
+      <header className="doc-header">
+        <img className="doc-seal" src="/image1.png" alt="ตราโรงเรียนวัดทุ่งจาน" />
+        <div className="doc-header-copy">
+          <h1>บันทึกหลังการจัดการเรียนรู้ (KPA)</h1>
+          <p>โรงเรียน{p.school || "วัดทุ่งจาน"}</p>
+        </div>
+      </header>
+      <div className="doc-header-rule" />
+
+      <div className="doc-post-meta">
+        <div><strong>ครูผู้สอน</strong> {p.teacher || "-"}</div>
+        <div><strong>รายวิชา</strong> {p.subject || "-"}</div>
+        <div><strong>ชั้น</strong> {p.grade || "-"}</div>
+        <div><strong>วันที่สอน</strong> {formatThaiDate(p.teachingDate)}</div>
+        <div className="doc-post-meta-wide"><strong>เรื่อง</strong> {p.topic || "-"}</div>
+      </div>
+
+      <div className="doc-post-block">
+        <h2>K — ด้านความรู้ (Knowledge)</h2>
+        <p>{resultFromPlan(record.knowledge, objectives.knowledge)}</p>
+      </div>
+      <div className="doc-post-block">
+        <h2>P — ด้านทักษะ/กระบวนการ (Process)</h2>
+        <p>{resultFromPlan(record.process, objectives.process)}</p>
+      </div>
+      <div className="doc-post-block">
+        <h2>A — ด้านเจตคติ (Attitude)</h2>
+        <p>{resultFromPlan(record.attitude, objectives.attitude)}</p>
+      </div>
+      <div className="doc-post-block">
+        <h2>ปัญหาและอุปสรรค</h2>
+        <p>{record.problems || "........................................................................................................................"}</p>
+        {!record.problems && <p>........................................................................................................................</p>}
+      </div>
+      <div className="doc-post-block">
+        <h2>แนวทางแก้ไขและพัฒนา</h2>
+        <p>{record.solutions || "........................................................................................................................"}</p>
+        {!record.solutions && <p>........................................................................................................................</p>}
+      </div>
+      <div className="doc-post-block">
+        <h2>ผลสำเร็จของการจัดการเรียนรู้</h2>
+        <p>
+          {record.success || `การจัดการเรียนรู้เรื่อง ${p.topic || "ที่กำหนด"} สอดคล้องกับจุดประสงค์ด้านความรู้ ทักษะ/กระบวนการ และเจตคติ`}
+        </p>
+      </div>
+
+      <div className="doc-signatures">
+        <div><p>ลงชื่อ ...................................................... ผู้สอน</p><p>( {p.teacher || "................................"} )</p><p>ครูผู้สอน</p></div>
+        <div><p>ลงชื่อ ......................................................</p><p>( {p.director || "................................"} )</p><p>ผู้อำนวยการโรงเรียน{p.school || ""}</p></div>
+      </div>
+    </section>
+  );
+}
+
 export default function PlanDocument({ plan }) {
   const p = plan || {};
   const standards = p.standardsOld || {};
@@ -125,18 +193,7 @@ export default function PlanDocument({ plan }) {
         </div>
       </Section>
 
-      <Section no="11" title="บันทึกหลังการจัดการเรียนรู้">
-        <p>ผลการจัดการเรียนรู้ ....................................................................................................</p>
-        <p>....................................................................................................................................</p>
-        <p>ปัญหา/อุปสรรค ..........................................................................................................</p>
-        <p>....................................................................................................................................</p>
-        <p>แนวทางแก้ไข/ข้อเสนอแนะ ..........................................................................................</p>
-        <p>....................................................................................................................................</p>
-        <div className="doc-signatures">
-          <div><p>ลงชื่อ ...................................................... ผู้สอน</p><p>( {p.teacher || "................................"} )</p><p>ครูผู้สอน</p></div>
-          <div><p>ลงชื่อ ......................................................</p><p>( {p.director || "................................"} )</p><p>ผู้อำนวยการโรงเรียน{p.school || ""}</p></div>
-        </div>
-      </Section>
+      <PostTeachingPage plan={p} objectives={objectives} />
     </article>
   );
 }
