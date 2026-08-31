@@ -20,7 +20,7 @@ const EMPTY_FORM = {
   unit: "",
   topic: "",
   timeText: "1 ชั่วโมง",
-  teachingModel: "",
+  teachingModel: "WAT บูรณาการวงจรคุณภาพ PDCA",
   standard: "",
   notes: "",
   postTeachingNotes: "",
@@ -136,7 +136,8 @@ export default function CreatePage() {
                   <input className={input} value={form.timeText} onChange={(e) => setF("timeText", e.target.value)} placeholder="เช่น 1 ชั่วโมง" />
                 </Field>
                 <Field label="รูปแบบ/เทคนิคการสอน">
-                  <input className={input} value={form.teachingModel} onChange={(e) => setF("teachingModel", e.target.value)} placeholder="เช่น WAT Model + PDCA (เว้นว่างให้ AI เลือก)" />
+                  <input className={input} value={form.teachingModel} onChange={(e) => setF("teachingModel", e.target.value)} placeholder="WAT บูรณาการวงจรคุณภาพ PDCA" />
+                  <p className="text-xs text-slate-500 mt-1">กิจกรรมจะเรียง 4 ขั้น: W/Plan → A/Do → T/Check → สรุป/Act</p>
                 </Field>
                 <Field label="โรงเรียน">
                   <input className={input} value={form.school} onChange={(e) => setF("school", e.target.value)} placeholder="ชื่อโรงเรียน" />
