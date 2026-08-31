@@ -44,3 +44,20 @@ alter table public.plans enable row level security;
 -- อนุญาตเฉพาะ backend ที่ใช้ service_role/secret key และปิด client roles อย่างชัดเจน
 revoke all on table public.plans from anon, authenticated;
 grant select, insert, update, delete on table public.plans to service_role;
+
+
+-- โปรไฟล์ข้อมูลพื้นฐานสำหรับเติมฟอร์มสร้างแผนอัตโนมัติ
+-- แอปนี้ใช้โปรไฟล์กลางเพียง 1 แถว (id = 1)
+create table if not exists public.school_profile (
+  id          smallint primary key default 1 check (id = 1),
+  teacher     text not null default '',
+  subject     text not null default '',
+  director    text not null default '',
+  school      text not null default '',
+  grade       text not null default '',
+  updated_at  timestamptz not null default now()
+);
+
+alter table public.school_profile enable row level security;
+revoke all on table public.school_profile from anon, authenticated;
+grant select, insert, update on table public.school_profile to service_role;
