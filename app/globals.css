@@ -40,6 +40,36 @@ body {
 .doc-header-copy p { margin: 3px 0 0; font-size: 20px; line-height: 1.25; }
 .doc-header-rule { height: 1.5px; margin: 7px 0 12px; background: #176b5a; }
 
+.doc-plan-header {
+  display: grid;
+  grid-template-columns: 82px 1fr 82px;
+  align-items: center;
+  min-height: 78px;
+  margin-bottom: 4px;
+}
+
+.doc-plan-header .doc-seal { width: 68px; height: 68px; }
+.doc-plan-header-copy { grid-column: 2; text-align: center; }
+.doc-plan-header-copy h1 { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 700; }
+.doc-plan-header-copy p { margin: 2px 0 0; font-size: 17px; line-height: 1.2; }
+
+.doc-plan-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 56px;
+  margin: 4px 0 10px;
+  padding: 0;
+}
+
+.doc-plan-meta-column {
+  display: grid;
+  gap: 1px;
+}
+
+.doc-plan-meta .doc-meta-item {
+  line-height: 1.35;
+}
+
 .doc-meta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -174,6 +204,11 @@ body {
 @media (max-width: 640px) {
   .doc-sheet { font-size: 16px; }
   .doc-header { grid-template-columns: 62px 1fr 20px; }
+  .doc-plan-header { grid-template-columns: 62px 1fr 20px; min-height: 64px; }
+  .doc-plan-header .doc-seal { width: 54px; height: 54px; }
+  .doc-plan-header-copy h1 { font-size: 19px; }
+  .doc-plan-header-copy p { font-size: 16px; }
+  .doc-plan-meta { grid-template-columns: 1fr; gap: 2px; }
   .doc-seal { width: 58px; height: 58px; }
   .doc-header-copy h1 { font-size: 21px; }
   .doc-header-copy p, .doc-section-title { font-size: 18px; }
@@ -197,6 +232,12 @@ body {
   }
   .doc-header-copy h1 { font-size: 20pt; }
   .doc-header-copy p, .doc-section-title { font-size: 17pt; }
+  .doc-plan-header { grid-template-columns: 58pt 1fr 58pt; min-height: 58pt; margin-bottom: 2pt; }
+  .doc-plan-header .doc-seal { width: 52pt; height: 52pt; }
+  .doc-plan-header-copy h1 { font-size: 18pt; }
+  .doc-plan-header-copy p { font-size: 15pt; }
+  .doc-plan-meta { column-gap: 40pt; margin: 2pt 0 6pt; }
+  .doc-plan-meta .doc-meta-item { font-size: 14pt; line-height: 1.2; }
   .doc-table { font-size: 14pt; }
   .doc-section { margin-top: 12pt; }
   .doc-section-title, .doc-post-block h2, .doc-table thead, .doc-signatures { break-inside: avoid; }
