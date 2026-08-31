@@ -2,15 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --page-bg: #f5f6fb;
-}
+:root { --page-bg: #f5f6fb; }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-}
+html, body { padding: 0; margin: 0; }
 
 body {
   background: var(--page-bg);
@@ -18,7 +12,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* พื้นหลังไล่เฉดนุ่ม ๆ สำหรับหน้าแอป */
 .app-gradient {
   background:
     radial-gradient(1200px 600px at 10% -10%, #e0e7ff 0%, transparent 55%),
@@ -26,30 +19,92 @@ body {
     var(--page-bg);
 }
 
-/* กระดาษเอกสารแผน */
 .doc-sheet {
   background: #fff;
-  color: #111827;
-  line-height: 1.7;
+  color: #111;
+  font-family: "TH Sarabun New", "TH SarabunPSK", "Sarabun", sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
 }
 
-/* ===== สไตล์ตอนสั่งพิมพ์ ===== */
+.doc-header {
+  display: grid;
+  grid-template-columns: 82px 1fr 82px;
+  align-items: center;
+  min-height: 84px;
+}
+
+.doc-seal { width: 74px; height: 74px; object-fit: contain; justify-self: center; }
+.doc-header-copy { grid-column: 2; text-align: center; }
+.doc-header-copy h1 { margin: 0; font-size: 26px; line-height: 1.25; font-weight: 700; }
+.doc-header-copy p { margin: 3px 0 0; font-size: 20px; line-height: 1.25; }
+.doc-header-rule { height: 1.5px; margin: 7px 0 12px; background: #176b5a; }
+
+.doc-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 26px;
+  row-gap: 3px;
+  border: 1px solid #555;
+  padding: 10px 12px;
+}
+
+.doc-meta-item { min-width: 0; }
+.doc-section { margin-top: 20px; break-inside: auto; }
+.doc-section-title {
+  margin: 0 0 7px;
+  border-left: 5px solid #176b5a;
+  background: #e8f0ec;
+  padding: 4px 10px 3px;
+  color: #111;
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 700;
+  break-after: avoid;
+}
+
+.doc-section-body { padding: 0 4px; text-align: justify; }
+.doc-section-body p { margin: 4px 0; }
+.doc-subtitle { margin-top: 8px !important; font-weight: 700; }
+.doc-empty { color: #777; }
+.doc-list { margin: 3px 0; padding-left: 28px; list-style: disc; }
+.doc-list-ordered { list-style: decimal; }
+.doc-list li { margin: 2px 0; }
+
+.doc-table { width: 100%; border-collapse: collapse; font-size: 17px; line-height: 1.45; text-align: left; }
+.doc-table th, .doc-table td { border: 1px solid #777; padding: 7px 8px; vertical-align: top; }
+.doc-table th { background: #e8f0ec; font-weight: 700; text-align: center; }
+.doc-table tr { break-inside: avoid; }
+
+.doc-signatures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px; margin-top: 34px; text-align: center; }
+.doc-signatures p { margin: 1px 0; }
+
+@media (max-width: 640px) {
+  .doc-sheet { font-size: 16px; }
+  .doc-header { grid-template-columns: 62px 1fr 20px; }
+  .doc-seal { width: 58px; height: 58px; }
+  .doc-header-copy h1 { font-size: 21px; }
+  .doc-header-copy p, .doc-section-title { font-size: 18px; }
+  .doc-meta { grid-template-columns: 1fr; gap: 2px; }
+  .doc-signatures { grid-template-columns: 1fr; gap: 24px; }
+}
+
 @media print {
-  .no-print {
-    display: none !important;
-  }
-  body {
-    background: #fff;
-  }
+  .no-print { display: none !important; }
+  body { background: #fff; }
   .doc-sheet {
     box-shadow: none !important;
     margin: 0 !important;
     border-radius: 0 !important;
     max-width: 100% !important;
     padding: 0 !important;
+    font-size: 16pt;
+    line-height: 1.45;
   }
-  @page {
-    size: A4;
-    margin: 18mm 16mm;
-  }
+  .doc-header-copy h1 { font-size: 20pt; }
+  .doc-header-copy p, .doc-section-title { font-size: 17pt; }
+  .doc-table { font-size: 14pt; }
+  .doc-section { margin-top: 12pt; }
+  .doc-section-title, .doc-table thead, .doc-signatures { break-inside: avoid; }
+  @page { size: A4; margin: 18mm 16mm; }
 }
