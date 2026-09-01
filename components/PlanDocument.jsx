@@ -2,6 +2,21 @@
 
 import { formatThaiDate } from "@/lib/thaiDate";
 
+function toArabicDigits(value) {
+  if (typeof value === "string") {
+    return value.replace(/[๐-๙]/g, (digit) =>
+      String("๐๑๒๓๔๕๖๗๘๙".indexOf(digit))
+    );
+  }
+  if (Array.isArray(value)) return value.map(toArabicDigits);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, toArabicDigits(item)])
+    );
+  }
+  return value;
+}
+
 function Section({ no, title, children }) {
   return (
     <section className="doc-section">
@@ -146,7 +161,7 @@ function PostTeachingPage({ plan, objectives }) {
 }
 
 export default function PlanDocument({ plan }) {
-  const p = plan || {};
+  const p = toArabicDigits(plan || {});
   const standards = p.standardsOld || {};
   const objectives = p.objectives || {};
   const situation = p.problemSituation || {};
