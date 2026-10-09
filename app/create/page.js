@@ -10,6 +10,7 @@ import { downloadWord } from "@/lib/exportDoc";
 import { formatThaiDate } from "@/lib/thaiDate";
 
 const EMPTY_FORM = {
+  curriculumVersion: "2560",
   planNumber: "1",
   school: "",
   teacher: "",
@@ -110,7 +111,7 @@ export default function CreatePage() {
           <div className="max-w-3xl mx-auto">
             <h1 className="font-head text-2xl font-bold text-slate-800">สร้างแผนการสอนใหม่</h1>
             <p className="text-slate-500 mt-1">
-              กรอกข้อมูลพื้นฐาน แล้วให้ AI ร่างแผนให้ครบทั้ง 11 หัวข้อ (แก้ไขได้ภายหลัง)
+              เลือกหลักสูตร แล้วให้ AI ร่างแผนให้ครบทั้ง 12 หัวข้อ (แก้ไขได้ภายหลัง)
             </p>
 
             <form onSubmit={generate} className="mt-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
@@ -118,6 +119,18 @@ export default function CreatePage() {
                 value={form}
                 onApply={(profile) => setForm((current) => ({ ...current, ...profile }))}
               />
+
+              <Field label="หลักสูตร" required>
+                <div className="grid grid-cols-2 gap-3">
+                  {["2560", "2568"].map((version) => (
+                    <button key={version} type="button" onClick={() => setF("curriculumVersion", version)}
+                      className={`rounded-xl border-2 p-4 text-left transition ${form.curriculumVersion === version ? "border-brand-600 bg-brand-50 text-brand-700" : "border-slate-200 bg-white text-slate-600 hover:border-brand-200"}`}>
+                      <span className="block font-head text-lg font-bold">หลักสูตร {version}</span>
+                      <span className="block text-xs mt-1">{version === "2560" ? "มาตรฐาน/ตัวชี้วัด และ K-P-A" : "ผลลัพธ์ สมรรถนะ และ K-S-A"}</span>
+                    </button>
+                  ))}
+                </div>
+              </Field>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="กลุ่มสาระการเรียนรู้" required>
@@ -154,7 +167,7 @@ export default function CreatePage() {
                 </Field>
               </div>
 
-              <Field label="มาตรฐาน/ตัวชี้วัดที่ต้องการอ้างอิง (ถ้ามี)">
+              <Field label={form.curriculumVersion === "2568" ? "ผลลัพธ์การเรียนรู้ที่ต้องการอ้างอิง (ถ้ามี)" : "มาตรฐาน/ตัวชี้วัดที่ต้องการอ้างอิง (ถ้ามี)"}>
                 <textarea className={input} rows={2} value={form.standard} onChange={(e) => setF("standard", e.target.value)} placeholder="วางข้อความมาตรฐาน/ตัวชี้วัดที่ต้องการ หรือเว้นว่างให้ AI เสนอให้" />
               </Field>
 
@@ -164,7 +177,7 @@ export default function CreatePage() {
 
               <Field label="ข้อมูลสำหรับ AI ช่วยเขียนบันทึกหลังการสอน (ถ้ามี)">
                 <textarea className={input} rows={3} value={form.postTeachingNotes} onChange={(e) => setF("postTeachingNotes", e.target.value)} placeholder="เช่น นักเรียนส่วนใหญ่ทำแบบฝึกหัดได้ มีบางคนสับสนขั้นตอนการคำนวณ ควรทบทวนด้วยสื่อรูปธรรม — เว้นว่างได้และแก้ไขภายหลัง" />
-                <p className="text-xs text-slate-500 mt-1">AI จะใช้ข้อมูลนี้ร่างผล K/P/A ปัญหา แนวทางแก้ไข และผลสำเร็จ โดยไม่แต่งตัวเลขที่ไม่ได้ระบุ</p>
+                <p className="text-xs text-slate-500 mt-1">AI จะใช้ข้อมูลนี้ร่างผล {form.curriculumVersion === "2568" ? "K/S/A" : "K/P/A"} ปัญหา แนวทางแก้ไข และผลสำเร็จ โดยไม่แต่งตัวเลขที่ไม่ได้ระบุ</p>
               </Field>
 
               {error && <div className="rounded-lg bg-red-50 text-red-600 text-sm px-4 py-3">{error}</div>}
