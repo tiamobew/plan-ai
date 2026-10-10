@@ -22,6 +22,9 @@ export default function AppHeader() {
           <Link href="/dashboard" className="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
             แผนของฉัน
           </Link>
+          <Link href="/data" className="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
+            ข้อมูลพื้นฐาน
+          </Link>
           <Link
             href="/create"
             className="px-3 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700 font-medium"

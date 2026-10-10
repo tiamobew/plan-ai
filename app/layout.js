@@ -3,7 +3,8 @@ import "./globals.css";
 export const metadata = {
   title: "ผู้ช่วยเขียนแผนการจัดการเรียนรู้ด้วย AI",
   description:
-    "สร้างแผนการจัดการเรียนรู้ (Lesson Plan) แบบครบถ้วน ด้วย Google Gemini AI — พิมพ์และดาวน์โหลดเป็น Word ได้ทันที",
+    "ระบบสร้างแผนการจัดการเรียนรู้ด้วย AI รองรับหลักสูตร 2560 และ 2568 พัฒนาโดย ครูโสภิตรา จิตชู",
+  authors: [{ name: "ครูโสภิตรา จิตชู" }],
 };
 
 export const viewport = {

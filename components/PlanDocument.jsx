@@ -35,5 +35,6 @@ export default function PlanDocument({ plan }) {
     <Section no="11" title={`บันทึกหลังการสอน (${is2568?'K-S-A':'K-P-A'})`}><p><strong>K:</strong> {post.knowledge||'-'}</p><p><strong>{is2568?'S':'P'}:</strong> {post.skill||post.process||'-'}</p><p><strong>A:</strong> {post.attitude||'-'}</p><p><strong>ปัญหา:</strong> {post.problems||'-'}</p><p><strong>แนวทางแก้ไข:</strong> {post.solutions||'-'}</p><p><strong>ผลสำเร็จ:</strong> {post.success||'-'}</p></Section>
     <section className="doc-worksheet-page doc-page-break"><h1 className="doc-worksheet-title">12. {p.worksheet?.title||`ใบงาน เรื่อง ${p.topic||'-'}`}</h1><p><strong>คำชี้แจง:</strong> {p.worksheet?.instructions||'-'}</p><ol className="doc-list doc-list-ordered">{questions.map((x,i)=><li key={i}>{x.question}<div>....................................................................................................</div></li>)}</ol></section>
     <section className="doc-worksheet-page doc-page-break"><h1 className="doc-worksheet-title">เฉลย — {p.worksheet?.title||p.topic}</h1><ol className="doc-list doc-list-ordered">{questions.map((x,i)=><li key={i}><strong>{x.question}</strong><p>{x.answer}</p></li>)}</ol></section>
+    <footer className="text-center text-sm text-slate-500 mt-8 border-t pt-3">สร้างโดยระบบผู้ช่วยเขียนแผนการจัดการเรียนรู้ด้วย AI · พัฒนาโดย ครูโสภิตรา จิตชู</footer>
   </article>;
 }

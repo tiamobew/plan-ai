@@ -6,6 +6,8 @@ import AppHeader from "@/components/AppHeader";
 import PlanEditor from "@/components/PlanEditor";
 import PlanDocument from "@/components/PlanDocument";
 import ProfilePresetPicker from "@/components/ProfilePresetPicker";
+import ReferenceDataPicker from "@/components/ReferenceDataPicker";
+import DeveloperFooter from "@/components/DeveloperFooter";
 import { downloadWord } from "@/lib/exportDoc";
 import { formatThaiDate } from "@/lib/thaiDate";
 
@@ -22,6 +24,7 @@ const EMPTY_FORM = {
   topic: "",
   timeText: "1 ชั่วโมง",
   teachingModel: "WAT บูรณาการวงจรคุณภาพ PDCA",
+  pdcaSteps: "5",
   standard: "",
   notes: "",
   postTeachingNotes: "",
@@ -120,6 +123,8 @@ export default function CreatePage() {
                 onApply={(profile) => setForm((current) => ({ ...current, ...profile }))}
               />
 
+              <ReferenceDataPicker value={form} onChange={setForm} />
+
               <Field label="หลักสูตร" required>
                 <div className="grid grid-cols-2 gap-3">
                   {["2560", "2568"].map((version) => (
@@ -151,6 +156,12 @@ export default function CreatePage() {
                 <Field label="รูปแบบ/เทคนิคการสอน">
                   <input className={input} value={form.teachingModel} onChange={(e) => setF("teachingModel", e.target.value)} placeholder="WAT บูรณาการวงจรคุณภาพ PDCA" />
                   <p className="text-xs text-slate-500 mt-1">กิจกรรมจะเรียง 4 ขั้น: W/Plan → A/Do → T/Check → สรุป/Act</p>
+                </Field>
+                <Field label="จำนวนขั้นของกระบวนการ PDCA">
+                  <select className={input} value={form.pdcaSteps} onChange={(e) => setF("pdcaSteps", e.target.value)}>
+                    <option value="4">PDCA แบบ 4 ขั้น</option>
+                    <option value="5">PDCA แบบ 5 ขั้น (แยกสอนและฝึกปฏิบัติ)</option>
+                  </select>
                 </Field>
                 <Field label="โรงเรียน">
                   <input className={input} value={form.school} onChange={(e) => setF("school", e.target.value)} placeholder="ชื่อโรงเรียน" />
@@ -228,6 +239,7 @@ export default function CreatePage() {
           </div>
         )}
       </main>
+      <DeveloperFooter />
     </div>
   );
 }
